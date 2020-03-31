@@ -1,0 +1,126 @@
+@import '../styles/constants';
+@import '../styles/mixins';
+
+
+.image-preview-container {
+  position: absolute;
+  top: $image_preview_posistion_top;
+  width: $image_preview_width;
+  height: 45%;
+  border: 1px solid $preview_border;
+  background-color: $preview_background;
+  border-radius: 10px;
+  overflow-y:overlay;
+  display: flex;
+  align-items: flex-start;
+  justify-content: right;
+  .wrap {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .image-container {
+    position: relative;
+    margin: 5px;
+    height: 90px;
+    width: 150px;
+    border-radius: 5px;
+    z-index:2;
+    overflow: hidden;
+    .preview-image {
+      max-width:200px ;
+      min-width:150px;
+      min-height: 100px;
+      transform: scale(1.5);
+      transition: 0.3s ease-in-out;
+    }
+    .remove-trash {
+      position: absolute;
+      font-size: 36px;
+      top: 30%;
+      left: 39%;
+      z-index: 3;
+      color: white;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s linear;
+      cursor: pointer;
+    }
+    &:hover {
+      .preview-image{
+        filter:brightness(50%);
+        filter:blur(1px);
+        transform: scale(1);
+      }
+      .remove-trash {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  @include custom-scroll-bar;
+}
+
+@include mobile{
+  .image-preview-container {
+    top: $img_prev_mobile_pos_top;
+    width: $img_prev_mobile_width;
+    height: 65%;
+    .wrap{
+      justify-content: center;
+    }
+    
+    .image-container{
+      .preview-image {
+        max-width:200px;
+        min-width:150px;
+        min-height: 100px;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .image-preview-container {
+    top: $img_prev_mobile_pos_top;
+    width:$img_prev_mobile_width;
+    height: 65%;
+    .wrap{
+      justify-content: center;
+    }
+    
+    .image-container{
+      .preview-image {
+        max-width:200px;
+        min-width:150px;
+        min-height: 100px;
+      }
+    }
+  }
+}
+
+@include screen_2k {
+  .image-container {
+    margin: 10px !important;
+    height: 200px !important;
+    width: 334px !important;
+    .preview-image {
+      max-width:310px !important;
+      min-width:345px !important;
+      min-height: 230px !important;
+    }
+    .remove-trash {
+      font-size: 48px !important;
+      top: 40% !important;
+      left: 44% !important;
+    }
+    &:hover {
+      .preview-image{
+        filter:brightness(50%) !important;
+        filter:blur(5px) !important;
+      }
+    }
+  }
+}
