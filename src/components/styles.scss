@@ -6,18 +6,16 @@
   position: absolute;
   top: $image_preview_posistion_top;
   width: $image_preview_width;
-  height: 45%;
+  min-height: $image_preview_min_height;
   border: 1px solid $preview_border;
   background-color: $preview_background;
   border-radius: 10px;
-  overflow-y:overlay;
-  display: flex;
-  align-items: flex-start;
-  justify-content: right;
+  padding: 5px 5px 5px 5px;
+  overflow-y: overlay;
   .wrap {
-    position: relative;
     display: flex;
     flex-flow: row wrap;
+    width: 100%;
   }
 
   .image-container {
@@ -29,6 +27,7 @@
     z-index:2;
     overflow: hidden;
     .preview-image {
+      display: block;
       max-width:200px ;
       min-width:150px;
       min-height: 100px;
@@ -65,18 +64,22 @@
 
 @include mobile{
   .image-preview-container {
-    top: $img_prev_mobile_pos_top;
-    width: $img_prev_mobile_width;
-    height: 65%;
+    top: $image_preview_posistion_top;
+    width: $image_preview_width;
+    min-height: $image_preview_min_height;
+    max-height: $image_preview_max_height;
     .wrap{
       justify-content: center;
     }
     
     .image-container{
+      margin: 1.2vw;
+      height: 25vw;
+      width: 41vw;
       .preview-image {
-        max-width:200px;
-        min-width:150px;
-        min-height: 100px;
+        max-width: 45vw;
+        min-width: 41vw;
+        min-height: 25vw;
       }
     }
   }
@@ -84,19 +87,28 @@
 
 @include tablet {
   .image-preview-container {
-    top: $img_prev_mobile_pos_top;
-    width:$img_prev_mobile_width;
-    height: 65%;
+    top: $image_preview_posistion_top;
+    width:$image_preview_width;
+    min-height: $image_preview_min_height;
+    max-height: $image_preview_max_height;
     .wrap{
       justify-content: center;
     }
-    
     .image-container{
+      margin: .6vw;
+      height: 25vw;
+      width: 41vw;
       .preview-image {
-        max-width:200px;
-        min-width:150px;
-        min-height: 100px;
+        max-width: 45vw;
+        min-width: 41vw;
+        min-height: 25vw;
       }
+      .remove-trash {
+        top:39%;
+        left:44%;
+        font-size: 48px;
+      }
+
     }
   }
 }

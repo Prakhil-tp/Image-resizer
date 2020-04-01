@@ -29,19 +29,29 @@
 }
 
 @mixin mobile {
+  $image_preview_width: 89% !global;
+  $image_preview_posistion_top: 15% !global;
+  $image_preview_min_height: 60% !global;
+  $image_preview_max_height: 65% !global;
+  
   @media only screen and (max-width: 600px) {
     @content;
   }
 }
 
 @mixin tablet {
+  $image_preview_width: 85% !global;
+  $image_preview_posistion_top: 17% !global;
+  $image_preview_min_height: 59% !global;
+  $image_preview_max_height: 60% !global;
+
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     @content;
   }
 }
 
 @mixin screen_2k {
-  @media screen and (min-width: 1900px) {
+  @media only screen and (min-width: 1900px) {
     @content;
   }
 }
