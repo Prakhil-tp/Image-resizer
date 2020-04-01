@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ImagePreview from './components/ImagePreview';
 import ResizeControl from './components/ResizeControl';
 import FileInput from './components/FileInput'
-import "react-awesome-button/dist/styles.css";
 import './App.scss';
 
 function App() {
@@ -32,6 +31,7 @@ function App() {
     setImageList([...imageList, ...images]);
   }
 
+  // remove a single image from the imagelist
   const handleRemoveItem = item => {
     const newImgList = imageList.filter(image => {
       return image.filename !== item.filename
@@ -39,14 +39,25 @@ function App() {
     setImageList(newImgList);
   }
 
+  // clear all images
+  const handleClearImageList = () => {
+    setImageList([]);
+  }
+
   return (
     <div className="app">
+      <div className="title">
+        <span>IMAGE RESIZER</span>
+      </div>
       <div className="btn-list">
         <FileInput handleImage={handleImage}/>
-        <ResizeControl imageList={imageList} />
+        <ResizeControl 
+          imageList={imageList}
+          clearImageList={handleClearImageList}
+        />
       </div>
-      <span className="count">
-        {`// ${imageList.length} ${imageList.length ===1?'file':'files'}`}
+      <span className="file-count">
+        {`${imageList.length} / 10 ${imageList.length ===1?'file':'files'}`}
       </span>
       <ImagePreview
         imageList={imageList}

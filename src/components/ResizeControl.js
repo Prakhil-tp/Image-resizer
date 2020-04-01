@@ -1,11 +1,11 @@
 import React from 'react'
 import JSZip from 'jszip';
 import  Resizer from 'react-image-file-resizer';
-import { AwesomeButton } from "react-awesome-button";
+import Button from '@material-ui/core/Button'
 import { saveAs } from 'file-saver';
 
 
-const ResizeControl = ({ imageList }) => {
+const ResizeControl = ({ imageList, clearImageList }) => {
 
   // image resizer - returns base64 encoded data uri
   const resizer = async file => {
@@ -46,20 +46,21 @@ const ResizeControl = ({ imageList }) => {
   const handleClick = async () => {
     if(imageList && imageList.length) {
       const resizedImages = await resizeImageList(imageList);
-      const zipFile = await generateZipFile(resizedImages)
-      saveAs(zipFile,"resized-images.zip")
+      const zipFile = await generateZipFile(resizedImages);
+      saveAs(zipFile,"resized-images.zip");
+      clearImageList();
     }
   }
   return (
     <div>
-      <AwesomeButton 
+      <Button 
+        variant="contained"
         className="aws-btn resizer"
-        type="primary"
-        onPress={handleClick}
+        onClick={handleClick}
         disabled={!(imageList && imageList.length)}
       >
         resize
-      </AwesomeButton>
+      </Button>
     </div>
   )
 }

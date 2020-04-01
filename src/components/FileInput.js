@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { AwesomeButton } from "react-awesome-button";
+import Button from '@material-ui/core/Button'
 
 
 const FileInput = ({ handleImage }) => {
@@ -7,13 +7,13 @@ const FileInput = ({ handleImage }) => {
 
   return (
     <div>
-      <AwesomeButton 
+      <Button 
+        variant="contained"
         className="aws-btn"
-        type="primary"
-        onPress={() => inputRef.current.click()}
+        onClick={() => inputRef.current.click()}
       >
         upload
-      </AwesomeButton>
+      </Button>
       <input
         ref={inputRef}
         type="file"
