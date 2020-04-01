@@ -51,7 +51,7 @@ body {
 @include mobile {
   .title {
     top: 3vh;
-    left: (102 - $image_preview_width)/2;
+    left: (100 - $image_preview_width)/2;
     font-size:25px;    
   }
   .file-count {

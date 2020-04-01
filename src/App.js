@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ImagePreview from './components/ImagePreview';
 import ResizeControl from './components/ResizeControl';
 import FileInput from './components/FileInput'
+import {isMobile} from 'react-device-detect'
 import './App.scss';
 
 function App() {
@@ -21,14 +22,25 @@ function App() {
 
   const handleImage = async e => {
     const fileList = Array.from(e.target.files);
-    const revisedFileList = fileList.filter(imageitem => !imageList.some(image => (
-      image.filename === imageitem.name
-    )))
-    const images = await Promise.all(revisedFileList.map(async file => {
-      const dataUri = await readFile(file);
-      return {filename: file.name, dataUri, file }
-    }))
-    setImageList([...imageList, ...images]);
+    if(fileList && fileList.length) {
+      let revisedFileList = fileList.filter(imageitem => !imageList.some(image => (
+        image.filename === imageitem.name
+      )))
+
+      let limit = revisedFileList.length;
+      if(isMobile) {
+        limit = 10 - imageList.length;
+      } else {
+        limit = 18 -imageList.length;
+      }
+      revisedFileList = revisedFileList.slice(0,limit)
+
+      const images = await Promise.all(revisedFileList.map(async file => {
+        const dataUri = await readFile(file);
+        return {filename: file.name, dataUri, file }
+      }))
+      setImageList([...imageList, ...images]);
+    }
   }
 
   // remove a single image from the imagelist
@@ -57,7 +69,7 @@ function App() {
         />
       </div>
       <span className="file-count">
-        {`${imageList.length} / 10 ${imageList.length ===1?'file':'files'}`}
+        {`${imageList.length} / ${isMobile?'10':'18'} ${imageList.length ===1?'file':'files'}`}
       </span>
       <ImagePreview
         imageList={imageList}
