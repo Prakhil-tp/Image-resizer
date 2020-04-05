@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ImagePreview from './components/ImagePreview';
 import ResizeControl from './components/ResizeControl';
 import FileInput from './components/FileInput'
-import {isMobile} from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import './App.scss';
 
 function App() {
