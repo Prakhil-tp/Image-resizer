@@ -1,7 +1,6 @@
 @import '../styles/constants';
 @import '../styles/mixins';
 
-
 .image-preview-container {
   position: absolute;
   top: $image_preview_posistion_top;
@@ -114,24 +113,24 @@
 }
 
 @include screen_2k {
-  .image-container {
-    margin: 10px !important;
-    height: 200px !important;
-    width: 334px !important;
+ .image-preview-container .image-container {
+    margin: 10px;
+    height: 200px;
+    width: 334px;
     .preview-image {
-      max-width:310px !important;
-      min-width:345px !important;
-      min-height: 230px !important;
+      max-width:310px;
+      min-width:345px;
+      min-height: 230px;
     }
     .remove-trash {
-      font-size: 48px !important;
-      top: 40% !important;
-      left: 44% !important;
+      font-size: 48px;
+      top: 40%;
+      left: 44%;
     }
     &:hover {
       .preview-image{
-        filter:brightness(50%) !important;
-        filter:blur(5px) !important;
+        filter:brightness(50%);
+        filter:blur(5px);
       }
     }
   }
