@@ -17,13 +17,13 @@ stages:
     - task: Npm@1
       displayName: 'npm install'
       inputs:
-        workingDirectory: 'pipeline-storage-test'
+        workingDir: '$(System.DefaultWorkingDirectory)'
         command: install
 
     - task: Npm@1
       displayName: 'npm build'
       inputs:
-        workingDir: 'pipeline-storage-test'
+        workingDir: '$(System.DefaultWorkingDirectory)'
         command: custom
         customCommand: run-script build
         
@@ -31,7 +31,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files'
       inputs:
-        SourceFolder: 'pipeline-storage-test\build'
+        SourceFolder: '$(System.DefaultWorkingDirectory)\build'
         TargetFolder: '$(build.artifactstagingdirectory)'
         CleanTargetFolder: true
   
