@@ -58,7 +58,7 @@ stages:
           - task: AzureFileCopy@3
             inputs:
               sourcePath: $(Pipeline.Workspace)/build
-              azureSubscription: 'Free Trial'
-              destination: azureBlob
+              destination: 'AzureBlob'
               storage: $(storageaccountname)
               containerName: "$web"
+              
