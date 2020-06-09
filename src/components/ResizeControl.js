@@ -1,67 +1,72 @@
-import React from 'react'
-import JSZip from 'jszip';
-import  Resizer from 'react-image-file-resizer';
-import Button from '@material-ui/core/Button'
-import { saveAs } from 'file-saver';
-
+import React from "react";
+import JSZip from "jszip";
+import Resizer from "react-image-file-resizer";
+import Button from "@material-ui/core/Button";
+import { saveAs } from "file-saver";
 
 const ResizeControl = ({ imageList, clearImageList }) => {
-
   // image resizer - returns base64 encoded data uri
-  const resizer = async file => {
-    const ext = file.type.split('/').pop();
+  const resizer = async (file) => {
+    const ext = file.type.split("/").pop();
     return new Promise((resolve, reject) => {
       Resizer.imageFileResizer(
-        file,1280,300,ext,100,0,
-        uri => {
-          if(uri) return resolve(uri);
-          return reject('something wrong. resizing is not completed');
+        file,
+        1280,
+        300,
+        ext,
+        100,
+        0,
+        (uri) => {
+          if (uri) return resolve(uri);
+          return reject("something wrong. resizing is not completed");
         },
-        'base64'
-      )
-    })
-  }
+        "base64"
+      );
+    });
+  };
 
   // returns a list of resized image data uri
-  const resizeImageList = async imagefiles => {
-    const resizedList = await Promise.all(imagefiles.map(async ({filename, file}) => {
-      const imgData = await resizer(file)
-      return { filename, dataUri:imgData }
-    }))
+  const resizeImageList = async (imagefiles) => {
+    const resizedList = await Promise.all(
+      imagefiles.map(async ({ filename, file }) => {
+        const imgData = await resizer(file);
+        return { filename, dataUri: imgData };
+      })
+    );
     return resizedList;
-  }
+  };
 
   // returns a zip file, which contains resized images
-  const generateZipFile = async resizedImages => {
+  const generateZipFile = async (resizedImages) => {
     const zip = new JSZip();
-    for(let item of resizedImages) {
+    for (let item of resizedImages) {
       const { filename, dataUri } = item;
-      const idx = dataUri.indexOf('base64,') + 'base64,'.length; // or = 23 if you're sure about the prefix
+      const idx = dataUri.indexOf("base64,") + "base64,".length; // or = 23 if you're sure about the prefix
       const content = dataUri.substring(idx);
-      zip.file(filename, content, {base64: true});  
+      zip.file(filename, content, { base64: true });
     }
-    return zip.generateAsync({type:'blob'});
-  } 
+    return zip.generateAsync({ type: "blob" });
+  };
 
   const handleClick = async () => {
-    if(imageList && imageList.length) {
+    if (imageList && imageList.length) {
       const resizedImages = await resizeImageList(imageList);
       const zipFile = await generateZipFile(resizedImages);
-      saveAs(zipFile,"resized-images.zip");
+      saveAs(zipFile, "resized-images.zip");
       clearImageList();
     }
-  }
+  };
   return (
     <div>
-      <Button 
+      <Button
         variant="contained"
         className="aws-btn resizer"
         onClick={handleClick}
         disabled={!(imageList && imageList.length)}
       >
-        resize
+        resize now
       </Button>
     </div>
-  )
-}
-export default React.memo(ResizeControl)
+  );
+};
+export default React.memo(ResizeControl);
