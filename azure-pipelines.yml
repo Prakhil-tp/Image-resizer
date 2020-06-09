@@ -17,13 +17,13 @@ stages:
     - task: Npm@1
       displayName: 'npm install'
       inputs:
-        workingDir: 'my-app'
+        workingDir: 'pipeline-storage-test'
         command: install
 
     - task: Npm@1
       displayName: 'npm build'
       inputs:
-        workingDir: 'my-app'
+        workingDir: 'pipeline-storage-test'
         command: custom
         customCommand: run-script build
         
@@ -31,7 +31,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files'
       inputs:
-        SourceFolder: 'my-app\build'
+        SourceFolder: 'pipeline-storage-test\build'
         TargetFolder: '$(build.artifactstagingdirectory)'
         CleanTargetFolder: true
   
