@@ -57,8 +57,11 @@ stages:
             
           - task: AzureFileCopy@3
             inputs:
-              sourcePath: $(Pipeline.Workspace)/build
-              destination: 'AzureBlob'
-              storage: $(storageaccountname)
-              containerName: "$web"
+              SourcePath: '$(Pipeline.Workspace)/build'
+              azureSubscription: 'Free Trial(37c0f000-924b-4796-8698-5444be6369fb)'
+              Destination: 'AzureBlob'
+              storage: 'imageresizer10'
+              ContainerName: '$web'
+
+          
               
