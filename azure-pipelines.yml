@@ -1,0 +1,64 @@
+
+trigger:
+- master
+stages:
+- stage: build
+  jobs:
+  - job: build
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        workingDir: 'my-app'
+        command: install
+
+    - task: Npm@1
+      displayName: 'npm build'
+      inputs:
+        workingDir: 'my-app'
+        command: custom
+        customCommand: run-script build
+        
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files'
+      inputs:
+        SourceFolder: 'my-app\build'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        CleanTargetFolder: true
+  
+    - task: PublishBuildArtifacts@1      
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: 'build'
+
+- stage: deploy
+  jobs:
+  - deployment: deploy
+    pool:
+      vmImage: 'vs2017-win2016'
+    variables:
+      storageaccountname: imageresizer10
+    environment: 'Deploy to Storage'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: build
+            
+          - task: AzureFileCopy@3
+            inputs:
+              sourcePath: $(Pipeline.Workspace)/build
+              azureSubscription: 'AzureRM'
+              destination: azureBlob
+              storage: $(storageaccountname)
+              containerName: "$web"
