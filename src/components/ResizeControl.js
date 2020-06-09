@@ -64,7 +64,7 @@ const ResizeControl = ({ imageList, clearImageList }) => {
         onClick={handleClick}
         disabled={!(imageList && imageList.length)}
       >
-        resize now
+        resize
       </Button>
     </div>
   );
