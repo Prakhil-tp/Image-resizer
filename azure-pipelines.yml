@@ -17,7 +17,7 @@ stages:
     - task: Npm@1
       displayName: 'npm install'
       inputs:
-        workingDir: 'pipeline-storage-test'
+        workingDirectory: 'pipeline-storage-test'
         command: install
 
     - task: Npm@1
